@@ -14,11 +14,14 @@ class User(db.Model):
     @property
     def password(self):
         raise AttributeError('This attribute cannot be accessed.')
+    
     @password.setter
     def password(self,password):
         self.user_password = generate_password_hash(password)
+    
     def verify_password_hash(self,password):
         return check_password_hash(self.user_password,password)
+    
     #user_bio = db.Column(db.String(25), unique=True,nullable=False)
     #image= db.Column(db.String(25), unique=True,nullable=False)
     #user_posts= db.relationship('Post',backref='author',lazy=True)
