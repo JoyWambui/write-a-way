@@ -1,8 +1,12 @@
-from . import db
+from . import db, login_manager
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+class User(UserMixin,db.Model):
     """Class that defines the User Model and its methods."""
     __tablename__='users'
     
@@ -25,6 +29,7 @@ class User(db.Model):
     #user_bio = db.Column(db.String(25), unique=True,nullable=False)
     #image= db.Column(db.String(25), unique=True,nullable=False)
     #user_posts= db.relationship('Post',backref='author',lazy=True)
+    
     def __repr__(self):
         return f"User('{self.username}','{self.user_email}')"
     

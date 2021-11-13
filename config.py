@@ -13,7 +13,8 @@ class ProdConfig(Config):
 
 class DevConfig(Config):
     """Child class production configurations."""
-    DEBUG = True
+    SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://bobo:Riptide@localhost/write_a_way'
+    DEBUG=True
 
 config_options = {
 'development':DevConfig,
