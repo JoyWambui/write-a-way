@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Title: {{post.post_title|title}}</h2>
+                    <h2>Authored by: {{post.author.username|title}}</h2>
+                    <h2>Time Posted: {{post.post_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
+                    <p>{{format_post|safe}}</p>
+            </div>            
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+{%endblock%}

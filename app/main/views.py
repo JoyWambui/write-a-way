@@ -4,6 +4,7 @@ from ..models import Post, User
 from . import main
 from .forms import UpdateUserAccount,BlogPost
 from .. import db,images
+import markdown2
 
 @main.route('/')
 def index():
@@ -68,3 +69,12 @@ def user_posts(username):
     user_posts = Post.get_user_posts(user.id)    
     title='My Posts'
     return render_template('posts.html', title=title,user_posts=user_posts)
+
+@main.route('/posts/<int:id>')
+@login_required
+def single_post(id):
+    post=Post.query.get(id)
+    if post is None:
+        abort(404)
+    format_post = markdown2.markdown(post.post_content,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('post.html',post=post,format_post=format_post)
