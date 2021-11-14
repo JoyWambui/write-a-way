@@ -6,7 +6,9 @@ class Config:
     UPLOADED_IMAGES_DEST ='app/static/images'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://bobo:Riptide@localhost/write_a_way'
-
+    SIMPLEMDE_JS_IIFE=True
+    SIMPLEMDE_USE_CDN=True
+    
 class ProdConfig(Config):
     """Child class production configurations."""
     pass

@@ -1,8 +1,8 @@
 from flask import render_template,request,redirect,url_for,abort
 from flask_login import login_required
-from ..models import User
+from ..models import Post, User
 from . import main
-from .forms import UpdateUserAccount
+from .forms import UpdateUserAccount,BlogPost
 from .. import db,images
 
 @main.route('/')
@@ -43,3 +43,20 @@ def update_profile_picture(username):
         user.user_account_image = image_path
         db.session.commit()        
         return redirect(url_for('.account',username= username))
+    
+@main.route('/user/<username>/post/new')
+@login_required
+def new_post(username):
+    user=User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    post_form= BlogPost()
+    if post_form.validate_on_submit():
+        new_post = Post(post_title=post_form.added_post_title.data,post_content=post_form.added_post_content.data,author=user)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for('.index'))
+    
+    title='Create New Post'
+    return render_template('new_post.html', title=title,post_form=post_form)
+

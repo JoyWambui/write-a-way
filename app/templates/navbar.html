@@ -12,6 +12,7 @@
         <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('main.account',username=current_user.username)}}">Account</a></li>
+                <li><a href="{{url_for('main.new_post',username=current_user.username)}}">New</a></li>
                 <li><a href="{{url_for('auth.logout')}}">Log out</a></li>
             {% else %}
                 <li><a href="{{url_for('auth.login')}}">Log in</a></li>
