@@ -3,7 +3,7 @@ from flask_login import login_required
 from ..models import User
 from . import main
 from .forms import UpdateUserAccount
-from .. import db
+from .. import db,images
 
 @main.route('/')
 def index():
@@ -32,3 +32,14 @@ def update_account(username):
     
     title='Update Account'
     return render_template('account/account_update.html', title=title,bio_form=bio_form)
+
+@main.route('/user/<username>/update/profile-picture', methods=['POST'])
+@login_required
+def update_profile_picture(username):
+    user=User.query.filter_by(username=username).first()
+    if 'image' in request.files:
+        filename = images.save(request.files['image'])
+        image_path = f'images/{filename}'
+        user.user_account_image = image_path
+        db.session.commit()        
+        return redirect(url_for('.account',username= username))
