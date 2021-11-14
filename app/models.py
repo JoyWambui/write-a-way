@@ -55,3 +55,9 @@ class Post(db.Model):
         """Gets all a user's posts."""
         got_posts= Post.query.filter_by(user_id=id).all()
         return got_posts
+    
+    @classmethod    
+    def get_all_posts(self):
+        """Gets all posts."""
+        all_posts= Post.query.all()
+        return all_posts

@@ -1,2 +1,9 @@
 {% extends 'base.html'%}
-<h1>index</h1>
+{% import 'macros.html' as macro%}
+
+{% block content %}
+<div class="container">
+    {{macro.displayPosts(all_posts)}}
+</div>
+
+{% endblock%}

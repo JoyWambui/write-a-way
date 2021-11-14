@@ -33,4 +33,14 @@ class TestPostModel(unittest.TestCase):
         self.new_post.save_posts()
         got_posts=Post.get_user_posts(self.new_post.user_id)
         self.assertTrue(len(got_posts)==1)
+        
+    def test_get_all_posts(self):
+        """Iest if all posts are returned."""
+        self.new_post.save_posts()
+        second_user= User(username='morty',user_email='morty@gmail.com',password='birdman')
+        self.second_post=Post(post_title='morty and rick',post_content='space adventures',author=second_user)
+        self.second_post.save_posts()
+        all_posts=Post.get_all_posts()
+        self.assertTrue(len(all_posts)==2)
+
 

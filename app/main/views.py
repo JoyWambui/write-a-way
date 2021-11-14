@@ -7,7 +7,9 @@ from .. import db,images
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    all_posts=Post.get_all_posts()
+    title='Write_a_way'
+    return render_template('index.html',all_posts=all_posts,title=title)
 
 @main.route('/user/<username>')
 def account(username):
