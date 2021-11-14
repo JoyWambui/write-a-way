@@ -1,5 +1,5 @@
-from flask import render_template,request,redirect,url_for,abort
-from flask_login import login_required
+from flask import flash, render_template,request,redirect,url_for,abort
+from flask_login import current_user,login_required
 from ..models import Post, User
 from . import main
 from .forms import UpdateUserAccount,BlogPost
@@ -78,3 +78,24 @@ def single_post(id):
         abort(404)
     format_post = markdown2.markdown(post.post_content,extras=["code-friendly", "fenced-code-blocks"])
     return render_template('post.html',post=post,format_post=format_post)
+
+@main.route('/posts/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(id):
+    post = Post.query.get(id)
+    if post is None:
+        abort(404)
+    if post.author != current_user:
+        abort(403)
+    post_form= BlogPost()
+    if post_form.validate_on_submit():
+        post.post_title= post_form.added_post_title.data
+        post.post_content = post_form.added_post_content.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('.single_post', id=post.id))
+    elif request.method == 'GET':
+        post_form.added_post_title.data=post.post_title
+        post_form.added_post_content.data = post.post_content
+    title='Update Post'
+    return render_template('new_post.html', title=title,post_form=post_form)

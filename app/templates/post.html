@@ -11,6 +11,7 @@
                     <h2>Authored by: {{post.author.username|title}}</h2>
                     <h2>Time Posted: {{post.post_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
                     <p>{{format_post|safe}}</p>
+                    <p><a href="{{url_for('main.update_post',id=post.id)}}">Update</a></p>
             </div>            
         </div>
         <div class="col-md-1"></div>
