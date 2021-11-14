@@ -14,6 +14,8 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(25), unique=True,nullable=False)
     user_email = db.Column(db.String(120), unique=True,nullable=False)
     user_password = db.Column(db.String(255), unique=True,nullable=False)
+    user_bio = db.Column(db.Text(),nullable=True)
+    user_account_image= db.Column(db.String(),nullable=True)
     #Setting password and its hash
     @property
     def password(self):
@@ -26,8 +28,6 @@ class User(UserMixin,db.Model):
     def verify_password_hash(self,password):
         return check_password_hash(self.user_password,password)
     
-    #user_bio = db.Column(db.String(25), unique=True,nullable=False)
-    #image= db.Column(db.String(25), unique=True,nullable=False)
     #user_posts= db.relationship('Post',backref='author',lazy=True)
     
     def __repr__(self):

@@ -10,9 +10,14 @@
             <a class="navbar-brand" href="/">Write-A-Way</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-          </ul>
-        <div class="navbar-collapse collapse">
+            {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('main.account',username=current_user.username)}}">Account</a></li>
+                <li><a href="{{url_for('auth.logout')}}">Log out</a></li>
+            {% else %}
+                <li><a href="{{url_for('auth.login')}}">Log in</a></li>
+            {%endif%}
+          </ul>        
+          <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
         </div>
