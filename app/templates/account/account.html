@@ -10,10 +10,13 @@
             {%else%}
                 <p> {{user.username| capitalize}} has no bio </p>
             {% endif %}
+            {% if user == current_user %}
+                <a href="{{url_for('main.update_account',username=user.username)}}">Edit profile</a>
+            {% endif %}
         </div>
         
         <div class="col-md-4">
-            {% if user.profile_pic_path %}
+            {% if user.user_account_image %}
                 <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
             {%else%}
                 <p>No profile picture</p>
