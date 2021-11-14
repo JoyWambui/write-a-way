@@ -1,4 +1,4 @@
-from flask import flash, render_template,request,redirect,url_for,abort
+from flask import render_template,request,redirect,url_for,abort
 from flask_login import current_user,login_required
 from ..models import Post, User
 from . import main
@@ -62,7 +62,7 @@ def new_post(username):
     title='Create New Post'
     return render_template('new_post.html', title=title,post_form=post_form)
 
-@main.route('/user/<username>/posts/')
+@main.route('/user/<username>/posts')
 @login_required
 def user_posts(username):
     user=User.query.filter_by(username=username).first()
@@ -92,10 +92,21 @@ def update_post(id):
         post.post_title= post_form.added_post_title.data
         post.post_content = post_form.added_post_content.data
         db.session.commit()
-        flash('Your post has been updated!', 'success')
         return redirect(url_for('.single_post', id=post.id))
     elif request.method == 'GET':
         post_form.added_post_title.data=post.post_title
         post_form.added_post_content.data = post.post_content
     title='Update Post'
     return render_template('new_post.html', title=title,post_form=post_form)
+
+@main.route('/posts/<int:id>/delete', methods=['GET','POST'])
+@login_required
+def delete_post(id):
+    post = Post.query.get(id)
+    if post is None:
+        abort(404)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('.index'))
