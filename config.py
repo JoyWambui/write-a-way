@@ -13,7 +13,8 @@ class ProdConfig(Config):
     """Child class production configurations."""
     pass
 
-
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://bobo:Riptide@localhost/write_a_way_test'
 class DevConfig(Config):
     """Child class production configurations."""
     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://bobo:Riptide@localhost/write_a_way'
@@ -21,5 +22,6 @@ class DevConfig(Config):
 
 config_options = {
 'development':DevConfig,
-'production':ProdConfig
+'production':ProdConfig,
+'test':TestConfig
 }

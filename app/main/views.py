@@ -44,19 +44,25 @@ def update_profile_picture(username):
         db.session.commit()        
         return redirect(url_for('.account',username= username))
     
-@main.route('/user/<username>/post/new')
+@main.route('/user/<username>/posts/new', methods=['GET','POST'])
 @login_required
 def new_post(username):
     user=User.query.filter_by(username=username).first()
-    if user is None:
-        abort(404)
     post_form= BlogPost()
     if post_form.validate_on_submit():
+        print(post_form.errors)
         new_post = Post(post_title=post_form.added_post_title.data,post_content=post_form.added_post_content.data,author=user)
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for('.index'))
+        return redirect(url_for('.user_posts', username=username))
     
     title='Create New Post'
     return render_template('new_post.html', title=title,post_form=post_form)
 
+@main.route('/user/<username>/posts/')
+@login_required
+def user_posts(username):
+    user=User.query.filter_by(username=username).first()
+    user_posts = Post.get_user_posts(user.id)    
+    title='My Posts'
+    return render_template('posts.html', title=title,user_posts=user_posts)

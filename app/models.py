@@ -44,3 +44,14 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     def __repr__(self):
         return f"Post('{self.post_title}','{self.post_creation}')"
+    
+    def save_posts(self):
+        """Saves new posts to the database."""
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod    
+    def get_user_posts(self,id):
+        """Gets all a user's posts."""
+        got_posts= Post.query.filter_by(user_id=id).all()
+        return got_posts

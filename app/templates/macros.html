@@ -1,0 +1,16 @@
+{% macro displayPosts(posts_list) %}
+    {% for post in posts_list %}
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 ">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h2>{{post.post_title|title}}</h2>
+                        <h3>{{post.post_content|truncate}}</h3>
+                    </div>
+                </div>            
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    {% endfor %}
+{% endmacro %}
