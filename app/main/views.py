@@ -75,7 +75,8 @@ def single_post(id):
     if post is None:
         abort(404)
     format_post = markdown2.markdown(post.post_content,extras=["code-friendly", "fenced-code-blocks"])
-    return render_template('post.html',post=post,format_post=format_post)
+    post_comments=Comment.get_post_comments(post.id)
+    return render_template('post.html',post=post,format_post=format_post,post_comments=post_comments)
 
 @main.route('/posts/<int:id>/update', methods=['GET', 'POST'])
 @login_required
@@ -115,8 +116,7 @@ def new_comment(id):
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         new_comment = Comment(comment_title=comment_form.added_comment_title.data,comment_author=comment_form.added_comment_author.data,comment_content=comment_form.added_comment_content.data,comment=post)
-        db.session.add(new_comment)
-        db.session.commit()
+        new_comment.save_comment()
         return redirect(url_for('.single_post', id=post.id))
     
     title='Add a Comment'

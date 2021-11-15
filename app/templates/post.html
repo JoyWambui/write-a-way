@@ -1,4 +1,6 @@
 {% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+
 
 {% block content%}
 <div class="container-fluid">
@@ -20,6 +22,16 @@
             </div>         
         </div>
         <div class="col-md-1"></div>
-    </div>
-</div>
+    </div><hr>
+    {% if post_comments %}
+        {{macro.displayComments(post_comments)}}
+    {%else%}
+        <div class="row">
+            <div class="col-md-1"> </div>
+            <div class="col-md-10">
+                <h1>This Blog Post has no comments</h1>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    {%endif%}
 {%endblock%}
