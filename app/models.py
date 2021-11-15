@@ -86,4 +86,11 @@ class Comment(db.Model):
         """Gets all a post's comments."""
         got_comments= Comment.query.filter_by(post_id=id).all()
         return got_comments
-
+    
+class Quote:
+    """Defines a quote object."""
+    def __init__(self,id,author,random_quote,permalink):
+        self.id = id
+        self.author = author
+        self.random_quote = random_quote
+        self.permalink = permalink

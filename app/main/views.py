@@ -1,5 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from flask_login import current_user,login_required
+
+from app.request import get_quotes
 from ..models import Post, User,Comment
 from . import main
 from .forms import UpdateUserAccount,BlogPost,CommentForm
@@ -8,9 +10,11 @@ import markdown2
 
 @main.route('/')
 def index():
+    random_quote= get_quotes()
+    print(random_quote)
     all_posts=Post.get_all_posts()
     title='Write_a_way'
-    return render_template('index.html',all_posts=all_posts,title=title)
+    return render_template('index.html',all_posts=all_posts,title=title,random_quote=random_quote)
 
 @main.route('/user/<username>')
 def account(username):

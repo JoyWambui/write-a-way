@@ -3,6 +3,19 @@
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 ">
+            <div class="card">
+                <div class="card-body">
+                    <p>"{{random_quote.random_quote}}"</p>
+                    <p>By: {{random_quote.author|title}}</p>
+                    <a href="{{random_quote.permalink}}" class="link-btn">See on Site</a>                    </div>
+            </div>            
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <hr>
     {{macro.displayPosts(all_posts)}}
 </div>
 
