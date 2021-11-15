@@ -11,8 +11,11 @@
                     <h2>Authored by: {{post.author.username|title}}</h2>
                     <h2>Time Posted: {{post.post_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
                     <p>{{format_post|safe}}</p>
+                    <p><a href="{{url_for('main.new_comment',id=post.id)}}">Add Comment</a></p>
+                    {% if current_user.is_authenticated %}
                     <p><a href="{{url_for('main.update_post',id=post.id)}}">Update</a></p>
                     <p><a href="{{url_for('main.delete_post',id=post.id)}}">Delete</a></p>
+                    {%endif%}
                 </div>   
             </div>         
         </div>

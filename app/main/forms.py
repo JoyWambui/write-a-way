@@ -12,4 +12,8 @@ class BlogPost(FlaskForm):
     added_post_content= TextAreaField('Write Your Post:')
     submit = SubmitField('Add Post')
     
-
+class CommentForm(FlaskForm):
+    added_comment_title = StringField('Input Comment Title:',validators=[InputRequired(),Length(min=5,max=60)])
+    added_comment_author = StringField('Input Your Name:',validators=[InputRequired(),Length(max=60)])
+    added_comment_content= TextAreaField('Write Your Comment:')
+    comment_submit = SubmitField('Add Comment')

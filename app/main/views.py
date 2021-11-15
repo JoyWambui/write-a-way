@@ -1,8 +1,8 @@
 from flask import render_template,request,redirect,url_for,abort
 from flask_login import current_user,login_required
-from ..models import Post, User
+from ..models import Post, User,Comment
 from . import main
-from .forms import UpdateUserAccount,BlogPost
+from .forms import UpdateUserAccount,BlogPost,CommentForm
 from .. import db,images
 import markdown2
 
@@ -55,8 +55,7 @@ def new_post(username):
     if post_form.validate_on_submit():
         print(post_form.errors)
         new_post = Post(post_title=post_form.added_post_title.data,post_content=post_form.added_post_content.data,author=user)
-        db.session.add(new_post)
-        db.session.commit()
+        new_post.save_posts()
         return redirect(url_for('.user_posts', username=username))
     
     title='Create New Post'
@@ -71,7 +70,6 @@ def user_posts(username):
     return render_template('posts.html', title=title,user_posts=user_posts)
 
 @main.route('/posts/<int:id>')
-@login_required
 def single_post(id):
     post=Post.query.get(id)
     if post is None:
@@ -110,3 +108,17 @@ def delete_post(id):
     db.session.delete(post)
     db.session.commit()
     return redirect(url_for('.index'))
+
+@main.route('/posts/<int:id>/comment/new',methods=['GET','POST'])
+def new_comment(id):
+    post=Post.query.get(id)
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(comment_title=comment_form.added_comment_title.data,comment_author=comment_form.added_comment_author.data,comment_content=comment_form.added_comment_content.data,comment=post)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('.single_post', id=post.id))
+    
+    title='Add a Comment'
+    return render_template('new_comment.html', title=title,comment_form=comment_form)
+

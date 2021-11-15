@@ -42,7 +42,7 @@ class Post(db.Model):
     post_content= db.Column(db.Text,nullable=False)
     post_creation = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
-    post_comments= db.relationship('Comment',backref='comment',lazy=True)
+    post_comments= db.relationship('Comment', cascade='all,delete,delete-orphan',backref='comment',lazy=True)
     def __repr__(self):
         return f"Post('{self.post_title}','{self.post_creation}')"
     
@@ -72,4 +72,18 @@ class Comment(db.Model):
     comment_author= db.Column(db.String(60),nullable=False)
     comment_content= db.Column(db.Text,nullable=False)
     comment_creation = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'),nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id', ondelete='CASCADE'),nullable=False)
+    def save_comment(self):
+        """Saves new comments to the database."""
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        
+    @classmethod    
+    def get_post_comments(self,id):
+        """Gets all a post's comments."""
+        got_comments= Comment.query.filter_by(post_id=id).all()
+        return got_comments
+
