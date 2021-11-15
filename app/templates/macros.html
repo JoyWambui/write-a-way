@@ -16,21 +16,3 @@
     {% endfor %}
 {% endmacro %}
 
-{% macro displayComments(comments_list) %}
-    {% for comment in comments_list%}
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10 ">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>Title: {{comment.comment_title|title}}</h2>
-                        <h2>Written by: {{comment.comment_author|title}}</h2>
-                        <h2>Time Written: {{comment.comment_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
-                        <p>{{comment.comment_content}}</p>
-                    </div>
-                </div>            
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-    {% endfor %}
-{% endmacro %}

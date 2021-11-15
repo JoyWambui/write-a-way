@@ -122,3 +122,14 @@ def new_comment(id):
     title='Add a Comment'
     return render_template('new_comment.html', title=title,comment_form=comment_form)
 
+@main.route('/comments/<int:id>/delete', methods=['GET','POST'])
+@login_required
+def delete_comment(id):
+    comment = Comment.query.get(id)
+    if comment is None:
+        abort(404)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('.single_post', id=comment.post_id))
+
+
