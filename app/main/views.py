@@ -1,10 +1,11 @@
+from crypt import methods
 from flask import render_template,request,redirect,url_for,abort
 from flask_login import current_user,login_required
-
+from ..emails import mail_message
 from app.request import get_quotes
-from ..models import Post, User,Comment
+from ..models import Post, User,Comment,Subscription
 from . import main
-from .forms import UpdateUserAccount,BlogPost,CommentForm
+from .forms import UpdateUserAccount,BlogPost,CommentForm,SubscriptionForm
 from .. import db,images
 import markdown2
 
@@ -15,6 +16,19 @@ def index():
     all_posts=Post.get_all_posts()
     title='Write_a_way'
     return render_template('index.html',all_posts=all_posts,title=title,random_quote=random_quote)
+
+@main.route('/subscribe',methods=['GET','POST'])
+def subscribe():
+    subscription_form = SubscriptionForm()
+    if subscription_form.validate_on_submit():
+        name= subscription_form.subscribe_name.data
+        email= subscription_form.subscribe_email.data
+        subscriber= Subscription(name=name,email=email)
+        db.session.add(subscriber)
+        db.session.commit()
+        return redirect(url_for('.index'))
+    title='Subscribe'
+    return render_template('subscribe.html', subscription_form=subscription_form,title=title)
 
 @main.route('/user/<username>')
 def account(username):
