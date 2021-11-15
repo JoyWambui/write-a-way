@@ -42,6 +42,7 @@ class Post(db.Model):
     post_content= db.Column(db.Text,nullable=False)
     post_creation = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
+    post_comments= db.relationship('Comment',backref='comment',lazy=True)
     def __repr__(self):
         return f"Post('{self.post_title}','{self.post_creation}')"
     
@@ -61,3 +62,14 @@ class Post(db.Model):
         """Gets all posts."""
         all_posts= Post.query.all()
         return all_posts
+    
+class Comment(db.Model):
+    """Class that defines the Comment Model and its methods."""
+    __tablename__='comments'
+    
+    id = db.Column(db.Integer,primary_key=True)
+    comment_title= db.Column(db.String(60),nullable=False)
+    comment_author= db.Column(db.String(60),nullable=False)
+    comment_content= db.Column(db.Text,nullable=False)
+    comment_creation = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'),nullable=False)

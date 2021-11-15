@@ -11,3 +11,5 @@ class BlogPost(FlaskForm):
     added_post_title = StringField('Input Blog Post Title:',validators=[InputRequired(),Length(min=5,max=60)])
     added_post_content= TextAreaField('Write Your Post:')
     submit = SubmitField('Add Post')
+    
+
