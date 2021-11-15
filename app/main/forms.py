@@ -19,6 +19,6 @@ class CommentForm(FlaskForm):
     comment_submit = SubmitField('Add Comment')
 
 class SubscriptionForm(FlaskForm):
-    subscribe_name = StringField('Input your Name:',validators=[InputRequired(message='This field is required.'),Length(min=5,max=20,message='Username should be between 5 and 20 characters.')])
+    subscribe_name = StringField('Input your Name:',validators=[InputRequired(message='This field is required.'),Length(max=20,message='Username should be under 20 characters.')])
     subscribe_email = StringField('Input your Email:',validators=[InputRequired('This field is required.'),Email(message='Input email in this format:username@gmail.com')])
     subscribe_submit = SubmitField('Subscribe')

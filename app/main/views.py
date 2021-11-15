@@ -74,6 +74,9 @@ def new_post(username):
         print(post_form.errors)
         new_post = Post(post_title=post_form.added_post_title.data,post_content=post_form.added_post_content.data,author=user)
         new_post.save_posts()
+        subscribers = Subscription.query.all()
+        for subscribe in subscribers:
+            mail_message("New Post is up!","emails/new_post",subscribe.email,subscribe=subscribe)
         return redirect(url_for('.user_posts', username=username))
     
     title='Create New Post'
