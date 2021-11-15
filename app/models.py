@@ -87,6 +87,15 @@ class Comment(db.Model):
         got_comments= Comment.query.filter_by(post_id=id).all()
         return got_comments
     
+class Subscription(db.Model):
+    """Class that defines the Subscription Model and its methods."""
+    __tablename__='subscriptions'
+    
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(25), unique=True,nullable=False)
+    email = db.Column(db.String(120), unique=True,nullable=False)
+
+    
 class Quote:
     """Defines a quote object."""
     def __init__(self,id,author,random_quote,permalink):
