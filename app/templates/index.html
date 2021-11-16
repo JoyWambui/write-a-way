@@ -1,16 +1,22 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
+{%block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock %}
+
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10 ">
-            <div class="card">
+            <div class="card text-center">
                 <div class="card-body">
-                    <p>"{{random_quote.random_quote}}"</p>
-                    <p>By: {{random_quote.author|title}}</p>
-                    <a href="{{random_quote.permalink}}" class="link-btn">See on Site</a>                    </div>
+                    <p class="quote">"{{random_quote.random_quote}}"</p>
+                    <p class="author">~{{random_quote.author|title}}~</p>
+                    <a href="{{random_quote.permalink}}" class="card_link">View on Site</a>
+                </div>
             </div>            
         </div>
         <div class="col-md-1"></div>

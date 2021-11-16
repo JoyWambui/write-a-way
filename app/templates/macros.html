@@ -3,12 +3,13 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10 ">
-                <div class="card">
+                <div class="card blog">
                     <div class="card-body">
-                        <h2>Title: {{post.post_title|title}}</h2>
-                        <h2>Authored by: {{post.author.username|title}}</h2>
+                        <h2 class="title">{{post.post_title|title}}</h2><hr>
+                        <h2>By: <span class="author">{{post.author.username|title}}</span></h2>
                         <h3>{{post.post_content|truncate}}</h3>
-                        <a href="{{url_for('main.single_post',id=post.id)}}" class="link-btn">Read More :</a>                    </div>
+                        <a href="{{url_for('main.single_post',id=post.id)}}" class="link-btn">Read More</a>
+                    </div>
                 </div>            
             </div>
             <div class="col-md-1"></div>

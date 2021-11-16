@@ -1,6 +1,9 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
-
+{%block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/post.css')}}">
+{% endblock %}
 
 {% block content%}
 <div class="container-fluid">
@@ -9,14 +12,14 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
-                    <h2>Title: {{post.post_title|title}}</h2>
-                    <h2>Authored by: {{post.author.username|title}}</h2>
-                    <h2>Time Posted: {{post.post_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
+                    <h2 class="title">{{post.post_title|title}}</h2><hr>
+                    <h2>By: {{post.author.username|title}}</h2>
                     <p>{{format_post|safe}}</p>
-                    <p><a href="{{url_for('main.new_comment',id=post.id)}}">Add Comment</a></p>
+                    <p class="date">{{post.post_creation.strftime('%Y-%m-%d %H:%M')}}</p>
+                    <p><a class="link-btn" href="{{url_for('main.new_comment',id=post.id)}}">Comment</a></p>
                     {% if current_user.is_authenticated %}
-                    <p><a href="{{url_for('main.update_post',id=post.id)}}">Update</a></p>
-                    <p><a href="{{url_for('main.delete_post',id=post.id)}}">Delete</a></p>
+                    <p><a class="link-btn update" href="{{url_for('main.update_post',id=post.id)}}">Update</a></p>
+                    <p><a class="link-btn delete" href="{{url_for('main.delete_post',id=post.id)}}">Delete</a></p>
                     {%endif%}
                 </div>   
             </div>         
@@ -28,14 +31,15 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10 ">
+                    <h1>Comments:</h1>
                     <div class="card">
                         <div class="card-body">
-                            <h2>Title: {{comment.comment_title|title}}</h2>
-                            <h2>Written by: {{comment.comment_author|title}}</h2>
-                            <h2>Time Written: {{comment.comment_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
+                            <h2>{{comment.comment_title|title}}</h2><hr>
+                            <h2>By: {{comment.comment_author|title}}</h2>
                             <p>{{comment.comment_content}}</p>
+                            <p class="date">{{comment.comment_creation.strftime('%Y-%m-%d %H:%M')}}</h2>
                             {% if current_user.is_authenticated %}
-                            <p><a href="{{url_for('main.delete_comment',id=comment.id)}}">Delete Comment</a></p>
+                            <p><a class="link-btn delete" href="{{url_for('main.delete_comment',id=comment.id)}}">Delete</a></p>
                             {%endif%}
                         </div>
                     </div>            
