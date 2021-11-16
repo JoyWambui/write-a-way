@@ -1,7 +1,7 @@
 # WRITE-A-WAY
 
-# BY:
-[Joy Wambui](https://github.com/JoyWambui)
+# BY: [Joy Wambui](https://github.com/JoyWambui)
+
 
 ## Description
 Write-a-way is a blog site where a user can view and comment on multiple blog posts by different writers. A user can also subscribe to the site. A writer is able to create an account and write, edit, and delete blog posts.
@@ -17,11 +17,12 @@ Write-a-way is a blog site where a user can view and comment on multiple blog po
    * Alternatively, click on the link provided below.
 
 #### To view on local machine:
-* Open Terminal:
-        -In your desired folder:
+* Open Terminal in your desired folder:
             $ git clone https://github.com/JoyWambui/write-a-way.git 
+            
             $ cd write-a-way
-            $ code . for VScode users or open in your desired editor.
+            
+            $ code . for VScode users or open in your desired editor
 
 * Install all  required dependencies in requirements.txt
 
