@@ -16,8 +16,8 @@
                 <li><a href="{{url_for('main.account',username=current_user.username)}}">Account</a></li>
                 <li><a href="{{url_for('auth.logout')}}">Log out</a></li>
             {% else %}
-                <li><a href="{{url_for('auth.login')}}">Log in</a></li>
                 <li><a href="/subscribe">Subscribe</a></li>
+                <li><a href="{{url_for('auth.login')}}">Log in</a></li>
                 {%endif%}
           </ul>        
           <div class="navbar-collapse collapse">
