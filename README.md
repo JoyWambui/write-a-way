@@ -18,6 +18,7 @@ Write-a-way is a blog site where a user can view and comment on multiple blog po
 
 #### To view on local machine:
 * Open Terminal in your desired folder:
+            
             $ git clone https://github.com/JoyWambui/write-a-way.git 
             
             $ cd write-a-way
